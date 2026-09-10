@@ -21,11 +21,11 @@ https://hb2810.github.io/physician-module/
 
 There are no quick-login controls. Enter an employee code and the shared demonstration password `1234`.
 
-- `12` or `17`: Consultant Physician (can sign assessments and fitness)
-- `306`, `309`, or `311`: Junior Physician/Resident (draft only; cannot issue fitness)
-- `1`: System Admin (Department Master access)
+- `1001` or `1002`: Consultant Physician (can sign assessments and fitness)
+- `1101`, `1102`, or `1103`: Junior Physician/Resident (draft only; cannot issue fitness)
+- `9001`: System Admin (Department Master access)
 
-These identities were selected from the supplied Stavya organisation chart. The patient records are fictional demonstration data.
+All staff identities, employee codes, patient names, identifiers, and clinical records are fictional demonstration data.
 
 ## Routes
 
