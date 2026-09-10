@@ -6,6 +6,7 @@ const STORE_KEY = 'ssie-physician-demo-v1';
 const clone = value => JSON.parse(JSON.stringify(value));
 const now = () => new Intl.DateTimeFormat('en-IN',{dateStyle:'medium',timeStyle:'short'}).format(new Date());
 const icon = (name, extra='') => <i className={`bi bi-${name} ${extra}`} aria-hidden="true"/>;
+const assetUrl = path => `${import.meta.env.BASE_URL}${path}`;
 
 function Status({children}) {
   const s=String(children).toLowerCase();
@@ -27,7 +28,7 @@ function Login({onLogin}) {
     </section>
     <section className="login-panel">
       <form className="login-card" onSubmit={submit} noValidate>
-        <img src="/stavya-logo.png" className="login-logo" alt="Stavya Spine Hospital"/>
+        <img src={assetUrl('stavya-logo.png')} className="login-logo" alt="Stavya Spine Hospital"/>
         <div className="demo-label">SSIE Demonstration Environment</div>
         <h2>Physician sign in</h2><p className="muted">Use your registered employee credentials.</p>
         {error&&<div className="alert alert-danger py-2" role="alert">{icon('exclamation-circle me-2')}{error}</div>}
@@ -156,7 +157,7 @@ export default function App(){
  else content=<Restricted/>;
  return <div className="app-shell">
   <a href="#main" className="skip-link">Skip to main content</a>
-  <aside className={`sidebar ${mobile?'open':''}`}><div className="sidebar-brand"><img src="/stavya-logo.png" alt="Stavya"/><button className="icon-btn mobile-close" aria-label="Close navigation" onClick={()=>setMobile(false)}>{icon('x-lg')}</button></div><div className="module-name"><span>SSIE</span><strong>Physician Medicine</strong><small>Demonstration environment</small></div><nav aria-label="Physician module">{NAV.map(([id,i,label])=><button key={id} className={page===id?'active':''} onClick={()=>go(id)}>{icon(i)}<span>{label}</span>{id==='handover'&&store.handovers.some(x=>!x.ack)&&<b>{store.handovers.filter(x=>!x.ack).length}</b>}</button>)}</nav><div className="sidebar-footer"><div className="user-mini"><span>{user.name.split(' ').filter(x=>x!=='Dr.').slice(0,2).map(x=>x[0]).join('')}</span><div><strong>{user.name}</strong><small>{user.role}</small></div></div><button className="signout" onClick={()=>{sessionStorage.removeItem('ssie-user');setUser(null)}}>{icon('box-arrow-left')} Sign out</button></div></aside>
+  <aside className={`sidebar ${mobile?'open':''}`}><div className="sidebar-brand"><img src={assetUrl('stavya-logo.png')} alt="Stavya"/><button className="icon-btn mobile-close" aria-label="Close navigation" onClick={()=>setMobile(false)}>{icon('x-lg')}</button></div><div className="module-name"><span>SSIE</span><strong>Physician Medicine</strong><small>Demonstration environment</small></div><nav aria-label="Physician module">{NAV.map(([id,i,label])=><button key={id} className={page===id?'active':''} onClick={()=>go(id)}>{icon(i)}<span>{label}</span>{id==='handover'&&store.handovers.some(x=>!x.ack)&&<b>{store.handovers.filter(x=>!x.ack).length}</b>}</button>)}</nav><div className="sidebar-footer"><div className="user-mini"><span>{user.name.split(' ').filter(x=>x!=='Dr.').slice(0,2).map(x=>x[0]).join('')}</span><div><strong>{user.name}</strong><small>{user.role}</small></div></div><button className="signout" onClick={()=>{sessionStorage.removeItem('ssie-user');setUser(null)}}>{icon('box-arrow-left')} Sign out</button></div></aside>
   {mobile&&<button className="sidebar-scrim" aria-label="Close navigation" onClick={()=>setMobile(false)}/>}<div className="app-main"><header className="topbar"><button className="icon-btn menu-btn" aria-label="Open navigation" onClick={()=>setMobile(true)}>{icon('list')}</button><div className="breadcrumb"><span>SSIE Clinical</span>{icon('chevron-right')}<strong>{NAV.find(x=>x[0]===page)?.[2]||'Physician'}</strong></div><div className="top-actions"><button className="icon-btn" aria-label="Clinical alerts">{icon('bell')}<b>3</b></button><span className="live"><i/>Live clinical record</span></div></header>{patientPage&&<PatientBanner patient={patient}/>}<main id="main" className="content">{content}</main><footer className="app-footer"><span>SSIE Clinical · Stavya Spine Hospital</span><span>Demo data · Last synced just now</span></footer></div>
   {toastState&&<div className={`app-toast ${toastState.tone}`} role="status">{icon(toastState.tone==='danger'?'exclamation-triangle':'check-circle')} {toastState.message}</div>}
  </div>;
